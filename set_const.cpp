@@ -27,7 +27,7 @@ double set_const::eta_r(double f){
 
 
 double set_const::eta_o(double f){
-	return 1.0;
+	return (1 + z*( 1-0.805))/( 1 + z*f);
 }
 
 
@@ -41,13 +41,14 @@ double set_const::U(double f){
 	return pow(m_n,4.0)*(b * pow(f,3.0)/3.0 + c*pow(f,4.0)/4.0);
 }
 
-set_const::set_const(double C_s, double C_o, double C_r, double b, double c) {
+set_const::set_const(double C_s, double C_o, double C_r, double b, double c, double z) {
 	// TODO Auto-generated constructor stub
 	set_const::C_o = C_o;
 	set_const::C_r = C_r;
 	set_const::C_s = C_s;
 	set_const::b = b;
 	set_const::c = c;
+	set_const::z = z;
 	//std::cout << "BBBBBB" << this->b <<"CCCC" << this->c << std::endl;
 	// TODO использование переданной функции как метода или же нафиг
 }

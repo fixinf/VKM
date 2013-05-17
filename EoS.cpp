@@ -82,6 +82,15 @@ double func_f_eq(double f, void * params) {
 		cout << "func_f : 2 = " << result * C.phi_n(f) * C.diff_phi_n(f) / (pi
 				* pi) << endl;
 	}
+
+	//Additions from \eta_i
+	dx = 1e-7;
+	double d_eta_o = (C.eta_o(f+dx) - C.eta_o(f-dx))/(2.0*dx);
+	double d_eta_r = (C.eta_r(f+dx) - C.eta_r(f-dx))/(2.0*dx);
+
+	res -= 0.5*pow(C.C_o * (nn + np) / m_n * C.eta_o(f),2.0) * d_eta_o;
+	res -= pow(C.C_r * (nn - np) / m_n * C.eta_r(f),2.0) * d_eta_r / 8.0;
+
 	return res;
 }
 
@@ -244,12 +253,12 @@ double t_E(double nn, double np, set_const C) {
 	if (pow(mu_e(nn+np, np, f, C),2.0) - me*me >= 0){
 		pf_e = sqrt(pow(mu_e(nn+np, np, f, C),2.0) - me*me );
 	}
-	cout << "MU_E = " <<  mu_e(nn+np, np, f, C) << endl;
+//	cout << "MU_E = " <<  mu_e(nn+np, np, f, C) << endl;
 	gsl_integration_qags(&F, 0.0, pf_e, 0, 1e-10, 1000, w, &result, &error);
 	gsl_integration_workspace_free(w);
 
 	res += result/(pi*pi);
-	cout << "RESULT   " << result << endl;
+//	cout << "RESULT   " << result << endl;
 	w = gsl_integration_workspace_alloc(1000);
 	double mmu = m_mu;
 	F.params = &mmu;
@@ -261,6 +270,7 @@ double t_E(double nn, double np, set_const C) {
 	gsl_integration_workspace_free(w);
 
 	res += result / (pi*pi);
+
 
 
 	return res;

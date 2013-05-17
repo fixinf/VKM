@@ -10,7 +10,8 @@
 
 class set_const {
 public:
-	set_const(double, double, double, double, double);
+	set_const(double, double, double, double, double, double);
+	//			Cs		Co		Cr		b		c		z
 	double diff_phi_n(double);
 	double U(double);
 	double phi_n(double);
@@ -22,6 +23,7 @@ public:
 	double C_r;
 	double b;
 	double c;
+	double z;
 };
 
 #endif /* SET_CONST_H_ */
