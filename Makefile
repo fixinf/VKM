@@ -1,6 +1,6 @@
 CXXFLAGS =	-O2 -g -Wall -fmessage-length=0 `gsl-config --cflags` 
 
-OBJS =		VKM.o EoS.o set_const.o
+OBJS =		VKM.o EoS.o set_const.o fitting.o
 
 LIBS =		`gsl-config --libs` 
 
@@ -17,5 +17,7 @@ EoS.o: EoS.cpp
 set_const.o: set_const.cpp
 		$(CXX) -c set_const.cpp -o set_const.o
 
+fitting.o : fitting.cpp
+		$(CXX) -c fitting.cpp -o fitting.o
 clean:
 	rm -f $(OBJS) $(TARGET)

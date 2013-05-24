@@ -96,19 +96,19 @@ double func_f_eq(double f, void * params) {
 
 double f_eq(double nn, double np, set_const C) {
 	int status;
-	int iter = 0, max_iter = 300;
+	int iter = 0, max_iter = 3000;
 	const gsl_root_fsolver_type *T;
 	gsl_root_fsolver *s;
 
 	double x = 0.0, x_expect = 0.5;
-	double xmin = 0.0, xmax = 2.0;
+	double xmin = 0.0, xmax = 10.0;
 
 	gsl_function F;
 	F.function = &func_f_eq;
 	func_f_eq_params params = { nn, np, C };
 	F.params = &params;
 
-	T = gsl_root_fsolver_brent;
+	T = gsl_root_fsolver_bisection;
 	s = gsl_root_fsolver_alloc(T);
 	gsl_root_fsolver_set(s, &F, xmin, xmax);
 
@@ -118,7 +118,7 @@ double f_eq(double nn, double np, set_const C) {
 		x = gsl_root_fsolver_root(s);
 		xmin = gsl_root_fsolver_x_lower(s);
 		xmax = gsl_root_fsolver_x_upper(s);
-		status = gsl_root_test_interval(xmin, xmax, 0, 1e-10);
+		status = gsl_root_test_interval(xmin, xmax, 0, 1e-6);
 		//		if (status == GSL_SUCCESS)
 		//		printf("Hi, i'm done");
 	} while (status == GSL_CONTINUE && iter < max_iter);
